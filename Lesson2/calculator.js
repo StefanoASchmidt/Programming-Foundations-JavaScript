@@ -1,32 +1,80 @@
-// Building a calculator
-// Outline:
-// Ask user for first number
-// Ask user for second number
-// Ask user for operation 
-// Perform operation
-// Print result to terminal 
-
+// initialization of program
 const readline = require('readline-sync');
-console.log('Welcome to Calculator!');
+const messages = require('./calculator_messages.json');
+let cont = '1';
 
-console.log('What is the first number?');
-let num1 = Number(readline.question());
+// ask user for language
+prompt(messages.lang)
+let langCode = readline.question();
 
-console.log('What is the second number?')
-let num2 = Number(readline.question());
-
-console.log('What operation would you like to perform?\n1) Add 2) Subtract 3) Multiply 4) Divide');
-let operation = readline.question();
-
-let output;
-if (operation === '1') {
-  output = num1 + num2;
-} else if (operation === '2') {
-  output = num1 - num2;
-} else if (operation === '3') {
-  output = num1 * num2;
-} else if (operation === '4') {
-  output = num1 / num2;
+while (!['1', '2', '3', '4', '5', '6', '7', 8].includes(langCode)) {
+  prompt(messages.invalidLang);
+  langCode = readline.question();
 }
 
-console.log(`The result is: ${output}`);
+prompt(messages[langCode].greeting);
+while(cont === '1') {
+  // obtain first number
+  prompt(messages[langCode].firstNum);
+  let num1 = readline.question();
+
+  while (invalidNumber(num1)) {
+    prompt(messages[langCode].invalidNum);
+    num1 = readline.question();
+  }
+  
+  // obtain second number
+  prompt(messages[langCode].secondNum);
+  let num2 = readline.question();
+
+  while (invalidNumber(num2)) {
+    prompt(messages[langCode].invalidNum);
+    num2 = readline.question();
+  }
+
+  // obtain operation
+  prompt(messages[langCode].askOp);
+  let operation = readline.question();
+
+  while (!['1', '2', '3', '4'].includes(operation)) {
+    prompt(messages[langCode].invalidOp);
+    operation = readline.question();
+  }
+
+  // compute output as function of operation
+  let output;
+  switch (operation) {
+    case '1':
+      output = Number(num1) + Number(num2);
+      break;
+    case '2':
+      output = Number(num1) - Number(num2);
+      break;
+    case '3':
+      output = Number(num1) * Number(num2);
+      break;
+    case '4':
+      output = Number(num1) / Number(num2);
+      break;
+  } 
+
+  prompt(messages[langCode].showResult + output);
+
+  // revaluate condtion to keep program running/looping
+  prompt(messages[langCode].contCalc);
+  cont = readline.question();
+
+  while (!['1', '2'].includes(cont)) {
+    prompt(messages[langCode].invalidContCalc);
+    cont = readline.question();
+  }
+}
+
+// functions declared 
+function prompt(message) {
+  console.log(`+-*/ ${message} +-*/`);
+}
+
+function invalidNumber(number) {
+  return number.trimStart() === '' || Number.isNaN(Number(number));
+}

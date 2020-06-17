@@ -1,0 +1,111 @@
+
+{ 
+  "lang": "Pick your language\n1) English 2) Spanish 3) French 4) German 5) Italian 6) Portuguese 7) Swedish 8) Turkish",
+
+  "invalidLang": "Must choose 1, 2, 3, 4, 5, 6, 7, or 8",
+
+  "1": 
+  {
+    "greeting": "Welcome to Calculator!",
+    "firstNum": "What is the first number?",
+    "secondNum": "What is the second number?",
+    "invalidNum": "That is not a valid number...",
+    "askOp": "What operation would you like to perform?\n1) Add 2) Subtract 3) Multiply 4) Divide",
+    "invalidOp": "Must choose 1, 2, 3, or 4",
+    "contCalc": "Do you want to perform another calculation?\n1) Yes 2) No",
+    "invalidContCalc": "Must choose 1 or 2",
+    "showResult": "The result is: "
+  },
+
+  "2": 
+  {
+    "greeting": "Bienvenido a la Calculadora!",
+    "firstNum": "¿Cuál es el primer número?",
+    "secondNum": "¿Cuál es el segundo número?",
+    "invalidNum": "Ese no es un número válido...",
+    "askOp": "¿Qué operación te gustaría realizar?\n1) Sumar 2) Restar 3) Multiplicar 4) Dividir",
+    "invalidOp": "Debe elegir 1, 2, 3 o 4",
+    "contCalc": "¿Quieres realizar otro cálculo?\n1) Sí 2) No",
+    "invalidContCalc": "Debe elegir 1 o 2",
+    "showResult": "El resultado es: "
+  },
+
+  "3": 
+  {
+    "greeting": "Bienvenue dans Calculatrice!",
+    "firstNum": "Quel est le premier numéro",
+    "secondNum": "Quel est le deuxième numéro?",
+    "invalidNum": "Ce n'est pas un numéro valide...",
+    "askOp": "Quelle opération aimeriez-vous effectuer?\n1) Ajouter 2) Soustraire 3) Multiplier 4) diviser",
+    "invalidOp": "Doit choisir 1, 2, 3 ou 4",
+    "contCalc": "Voulez-vous effectuer un autre calcul?\n1) Oui 2) Non",
+    "invalidContCalc": "Doit choisir 1 ou 2",
+    "showResult": "Le résultat est: "
+  },
+
+  "4":
+  {
+    "greeting": "Willkommen bei Calculator!",
+    "firstNum": "Was ist die erste Nummer?",
+    "secondNum": "Was ist die zweite Nummer?",
+    "invalidNum": "Das ist keine gültige Nummer...",
+    "askOp": "Welche Operation möchten Sie durchführen?\n1) Hinzufügen 2) Subtrahieren 3) Multiplizieren 4) Teilen",
+    "invalidOp": "Muss 1, 2, 3 oder 4 wählen",
+    "contCalc": "Möchten Sie eine weitere Berechnung durchführen?\n1) Ja 2) Nein",
+    "invalidContCalc": "Muss 1 oder 2 wählen",
+    "showResult": "Das Ergebnis ist: "
+  },
+
+  "5":
+  {
+    "greeting": "Benvenuto in Calcolatrice!",
+    "firstNum": "Qual è il primo numero?",
+    "secondNum": "Qual è il secondo numero?",
+    "invalidNum": "Questo non è un numero valido...",
+    "askOp": "Quale operazione ti piacerebbe eseguire?\n1) Addizionare 2) Sottrarre 3) Moltiplicare 4) Dividere",
+    "invalidOp": "Devi scegliere 1, 2, 3 o 4",
+    "contCalc": "Vuoi eseguire un altro calcolo?\n1) Sì 2) No",
+    "invalidContCalc": "Devi scegliere 1 o 2",
+    "showResult": "Il risultato è: "
+  },
+
+  "6":
+  {
+    "greeting": "Bem-vindo à calculadora!",
+    "firstNum": "Qual é o primeiro número?",
+    "secondNum": "Qual é o segundo número?",
+    "invalidNum": "Esse não é um número válido...",
+    "askOp": "Que operação você gostaria de executar?\n1) Adicionar 2) Subtrair 3) Multiplicar 4) Dividir",
+    "invalidOp": "É necessário escolher 1, 2, 3 ou 4",
+    "contCalc": "Deseja realizar outro cálculo?\n1) Sim 2) Não",
+    "invalidContCalc": "Deve escolher 1 ou 2",
+    "showResult": "O resultado é: "
+  },
+
+  "7":
+  {
+    "greeting": "Välkommen till Calculator!",
+    "firstNum": "Vad är det första numret?",
+    "secondNum": "Vad är det andra numret?",
+    "invalidNum": "Det är inte ett giltigt nummer...",
+    "askOp": "Vilken operation skulle du vilja utföra?\n1) Lägg till 2) Subtrahera 3) Multiplicera 4) Dela upp",
+    "invalidOp": "Måste välja 1, 2, 3 eller 4",
+    "contCalc": "Vill du utföra en annan beräkning?\n1) Ja 2) Nej",
+    "invalidContCalc": "Måste välja 1 eller 2",
+    "showResult": "Resultatet är: "
+  },
+
+  "8":
+  {
+    "greeting": "Hesap Makinesi'ne hoş geldiniz!",
+    "firstNum": "İlk sayı nedir?",
+    "secondNum": "İkinci sayı nedir?",
+    "invalidNum": "Bu geçerli bir sayı değil...",
+    "askOp": "Hangi işlemi yapmak istersiniz?\n1) Ekle 2) Çıkar 3) Çarpın 4) Böl",
+    "invalidOp": "1, 2, 3 veya 4 seçilmelidir",
+    "contCalc": "Başka bir hesaplama yapmak ister misiniz?\n1) Evet 2) Hayır",
+    "invalidContCalc": "1 veya 2 seçilmelidir",
+    "showResult": "Sonuç: "
+  }
+}
+
