@@ -11,7 +11,7 @@ while (true) {
 
   let loanAmount = getLoanAmount();
   let monthlyRate = getLoanMIR();
-  let loanDuration = getDuration(getOption());
+  let loanDuration = getDuration();
   let monthlyPayment = computeMonthlyPayment(loanAmount, monthlyRate, loanDuration);
 
   prompt(messages.payment + String(monthlyPayment));
@@ -49,18 +49,9 @@ function getLoanMIR() {
   return (Number(userInput) * PERCENT_TO_RATE) / MONTHS_IN_YEAR;
 }
 
-function getOption() {
-  prompt(messages.whichDuration);
-  let userInput = readline.question();
-  while (!['1', '2', '3'].includes(userInput)) {
-    prompt(messages.notDuration);
-    userInput = readline.question();
-  }
-  return userInput;
-}
-
-function getDuration(option) {
+function getDuration() {
   let duration;
+  let option = getOption();
   switch (option) {
     case '1':
       duration = getDurationYears();
@@ -80,14 +71,9 @@ function computeMonthlyPayment(amount, rate, months) {
 }
 
 function stopCalculator() {
-  prompt(messages.continue);
-  let userInput = readline.question();
-  while (invalidNumber(userInput) || !['1', '2'].includes(userInput)) {
-    prompt(messages.notContinue);
-    userInput = readline.question();
-  }
   let toStop;
-  switch (userInput) {
+  let symbolStop = getStop();
+  switch (symbolStop) {
     case '1':
       toStop = false;
       break;
@@ -100,6 +86,16 @@ function stopCalculator() {
 
 
 // HELPER FUNCTIONS USED IN THIS PROGRAM:
+
+function getDurationMonths() {
+  prompt(messages.durationMonths);
+  let userInput = readline.question();
+  while (invalidLoanDuration(userInput)) {
+    prompt(messages.notLoanDuration);
+    userInput = readline.question();
+  }
+  return Number(userInput);
+}
 
 function getDurationYears() {
   prompt(messages.durationYears);
@@ -128,28 +124,38 @@ function getDurationYearsMonths() {
   return (Number(userInput) * MONTHS_IN_YEAR) + Number(secondUserInput);
 }
 
-function getDurationMonths() {
-  prompt(messages.durationMonths);
+function getOption() {
+  prompt(messages.whichDuration);
   let userInput = readline.question();
-  while (invalidLoanDuration(userInput)) {
-    prompt(messages.notLoanDuration);
+  while (!['1', '2', '3'].includes(userInput)) {
+    prompt(messages.notDuration);
     userInput = readline.question();
   }
-  return Number(userInput);
+  return userInput;
 }
 
-function invalidNumber(number) {
-  return number.trimStart() === '' || Number.isNaN(Number(number));
-}
-
-function invalidLoan(number) {
-  return invalidNumber(number) || Number(number) <= 0;
+function getStop() {
+  prompt(messages.continue);
+  let userInput = readline.question();
+  while (invalidNumber(userInput) || !['1', '2'].includes(userInput)) {
+    prompt(messages.notContinue);
+    userInput = readline.question();
+  }
+  return userInput;
 }
 
 function invalidAPR(number) {
   return invalidNumber(number) || (Number(number) < 0 || Number(number) > 100);
 }
 
+function invalidLoan(number) {
+  return invalidNumber(number) || Number(number) <= 0;
+}
+
 function invalidLoanDuration(number) {
   return invalidNumber(number) || Number(number) <= 0;
+}
+
+function invalidNumber(number) {
+  return number.trimStart() === '' || Number.isNaN(Number(number));
 }
