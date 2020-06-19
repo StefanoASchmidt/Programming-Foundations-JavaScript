@@ -4,16 +4,16 @@ const messages = require('./calculator_messages.json');
 let cont = '1';
 
 // ask user for language
-prompt(messages.lang)
+prompt(messages.lang);
 let langCode = readline.question();
 
-while (!['1', '2', '3', '4', '5', '6', '7', 8].includes(langCode)) {
+while (!['1', '2', '3', '4', '5', '6', '7', '8'].includes(langCode)) {
   prompt(messages.invalidLang);
   langCode = readline.question();
 }
 
 prompt(messages[langCode].greeting);
-while(cont === '1') {
+while (cont === '1') {
   // obtain first number
   prompt(messages[langCode].firstNum);
   let num1 = readline.question();
@@ -22,7 +22,7 @@ while(cont === '1') {
     prompt(messages[langCode].invalidNum);
     num1 = readline.question();
   }
-  
+
   // obtain second number
   prompt(messages[langCode].secondNum);
   let num2 = readline.question();
@@ -56,7 +56,7 @@ while(cont === '1') {
     case '4':
       output = Number(num1) / Number(num2);
       break;
-  } 
+  }
 
   prompt(messages[langCode].showResult + output);
 
@@ -70,9 +70,9 @@ while(cont === '1') {
   }
 }
 
-// functions declared 
+// functions declared
 function prompt(message) {
-  console.log(`+-*/ ${message} +-*/`);
+  console.log(`+-*/ ${message}`);
 }
 
 function invalidNumber(number) {

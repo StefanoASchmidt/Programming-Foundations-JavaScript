@@ -1,0 +1,15 @@
+{
+  "opening": "This is a mortgage monthly payment calculator",
+  "loan": "What is the amount of your loan in dollars?",
+  "notLoan": "Enter a valid loan amount",
+  "loanAPR": "What is the Annual Percetage Rate tied to your loan?",
+  "notLoanAPR": "Enter a valid Annual Percentage Rate",
+  "whichDuration": "Do you want to give your loan duration in\n1) years 2) years and months 3) months ?",
+  "notDuration": "To choose option input 1, 2, or 3",
+  "durationYears": "What is the duration of your loan in years?",
+  "durationMonthsYears": "What is the duration of your loan in years and months?",
+  "numYears": "Enter years:",
+  "numMonths": "Enter months:",
+  "durationMonths": "What is the duration of your loan in months?",
+  "notLoanDuration": "Enter a valid duration"
+}
