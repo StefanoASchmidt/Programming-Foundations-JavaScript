@@ -11,8 +11,5 @@
   "numYears": "Enter years:",
   "numMonths": "Enter months:",
   "durationMonths": "What is the duration of your loan in months?",
-  "notLoanDuration": "Enter a valid duration",
-  "payment": "Your monthly payment is: ",
-  "continue": "Do you want to keep using the morgage monthly payment calculator?\n1) Yes 2) No",
-  "notContinue": "To choose option input 1 or 2"
+  "notLoanDuration": "Enter a valid duration"
 }

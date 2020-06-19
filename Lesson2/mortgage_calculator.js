@@ -3,20 +3,14 @@
 const readline = require('readline-sync');
 const messages = require('./mortgage_calculator_messages.json');
 
-while (true) {
-  prompt(messages.opening);
+prompt(messages.opening);
 
-  let loanAmount = getLoanAmount();
-  let monthlyRate = getLoanMIR();
-  let loanDuration = getDuration(getOption());
-  let monthlyPayment = computeMonthlyPayment(loanAmount, monthlyRate, loanDuration);
+let loanAmount = getLoanAmount();
+let monthlyInterestRate = getLoanMIR();
+let loanDurationInMonths = getDuration(getOption());
+let monthlyPayment = calculateMonthlyPayment(loanAmount, monthlyInterestRate, loanDurationInMonths);
 
-  prompt(messages.payment + String(monthlyPayment));
-
-  if (stopCalculator()) {
-    break;
-  }
-}
+prompt(`Your monthly payment is: ${monthlyPayment}$`);
 
 
 // FUNCTIONS USED IN THIS PROGRAM:
@@ -56,44 +50,19 @@ function getOption() {
 }
 
 function getDuration(option) {
-  let duration;
   switch (option) {
     case '1':
-      duration = getDurationYears();
-      break;
+      return getDurationYears();
     case '2':
-      duration = getDurationYearsMonths();
-      break;
+      return getDurationYearsMonths();
     case '3':
-      duration = getDurationMonths();
-      break;
+      return getDurationMonths();
   }
-  return duration;
 }
 
-function computeMonthlyPayment(amount, rate, months) {
+function calculateMonthlyPayment(amount, rate, months) {
   return amount * (rate / (1 - Math.pow((1 + rate), (-months))));
 }
-
-function stopCalculator() {
-  prompt(messages.continue);
-  let userInput = readline.question();
-  while (invalidNumber(userInput()) || !['1', '2'].includes(userInput)) {
-    prompt(messages.notContinue);
-    userInput = readline.question();
-  }
-  let toStop;
-  switch (userInput) {
-    case '1':
-      toStop = false;
-      break;
-    case '2':
-      toStop = true;
-      break;
-  }
-  return toStop;
-}
-
 
 // HELPER FUNCTIONS USED IN THIS PROGRAM:
 
