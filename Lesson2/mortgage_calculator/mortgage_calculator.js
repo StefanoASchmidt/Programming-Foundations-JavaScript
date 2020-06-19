@@ -3,8 +3,9 @@
 const readline = require('readline-sync');
 const messages = require('./mortgage_calculator_messages.json');
 
+prompt(messages.opening);
+
 while (true) {
-  prompt(messages.opening);
 
   let loanAmount = getLoanAmount();
   let monthlyRate = getLoanMIR();
@@ -16,6 +17,7 @@ while (true) {
   if (stopCalculator()) {
     break;
   }
+
 }
 
 
@@ -78,7 +80,7 @@ function computeMonthlyPayment(amount, rate, months) {
 function stopCalculator() {
   prompt(messages.continue);
   let userInput = readline.question();
-  while (invalidNumber(userInput()) || !['1', '2'].includes(userInput)) {
+  while (invalidNumber(userInput) || !['1', '2'].includes(userInput)) {
     prompt(messages.notContinue);
     userInput = readline.question();
   }
