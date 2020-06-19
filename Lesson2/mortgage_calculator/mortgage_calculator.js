@@ -2,6 +2,8 @@
 
 const readline = require('readline-sync');
 const messages = require('./mortgage_calculator_messages.json');
+const PERCENT_TO_RATE = 1 / 100;
+const MONTHS_IN_YEAR = 12;
 
 prompt(messages.opening);
 
@@ -44,7 +46,7 @@ function getLoanMIR() {
     prompt(messages.notLoanAPR);
     userInput = readline.question();
   }
-  return (Number(userInput) / 100) / 12;
+  return (Number(userInput) * PERCENT_TO_RATE) / MONTHS_IN_YEAR;
 }
 
 function getOption() {
@@ -106,7 +108,7 @@ function getDurationYears() {
     prompt(messages.notLoanDuration);
     userInput = readline.question;
   }
-  return 12 * Number(userInput);
+  return Number(userInput) * MONTHS_IN_YEAR;
 }
 
 function getDurationYearsMonths() {
@@ -123,7 +125,7 @@ function getDurationYearsMonths() {
     prompt(messages.notLoanDuration);
     secondUserInput = readline.question;
   }
-  return (12 * Number(userInput)) + Number(secondUserInput);
+  return (Number(userInput) * MONTHS_IN_YEAR) + Number(secondUserInput);
 }
 
 function getDurationMonths() {
