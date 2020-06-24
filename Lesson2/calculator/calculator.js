@@ -45,16 +45,16 @@ while (cont === '1') {
   let output;
   switch (operation) {
     case '1':
-      output = Number(num1) + Number(num2);
+      output = Number(Number(num1) + Number(num2)).toFixed(2);
       break;
     case '2':
-      output = Number(num1) - Number(num2);
+      output = Number(Number(num1) - Number(num2)).toFixed(2);
       break;
     case '3':
-      output = Number(num1) * Number(num2);
+      output = Number(Number(num1) * Number(num2)).toFixed(2);
       break;
     case '4':
-      output = Number(num1) / Number(num2);
+      output = Number(Number(num1) / Number(num2)).toFixed(2);
       break;
   }
 
