@@ -1,47 +1,73 @@
 // initialization of program
 const readline = require('readline-sync');
 const messages = require('./calculator_messages.json');
-let cont = '1';
+let langCode;
+let num1;
+let num2;
+let operation;
+let output;
 
-// ask user for language
-prompt(messages.lang);
-let langCode = readline.question();
+// get user language choice
+console.clear();
 
-while (!['1', '2', '3', '4', '5', '6', '7', '8'].includes(langCode)) {
-  prompt(messages.invalidLang);
-  langCode = readline.question();
+langCode = getInput("lang", "", verifyLanguage);
+
+// run calculator
+while(true) {
+
+  console.clear();
+
+  
+  num1 = getInput("firstNum", langCode, verifyNumber);
+
+  
+  num2 = getInput("secondNum", langCode, verifyNumber);
+
+  
+  operation = getInput("askOp", langCode, verifyOperation);
+
+  if (isValidArithmetic(num2, operation)) {
+    output = computeOutput(num1, num2, operation);
+    
+    giveResult(output, langCode);
+  } else {
+    
+    sayBadArithmetic(langCode);
+  }
+
+  
+  if (!getContinueProgram(langCode)) break;
+
 }
 
-prompt(messages[langCode].greeting);
-while (cont === '1') {
-  // obtain first number
-  prompt(messages[langCode].firstNum);
-  let num1 = readline.question();
 
-  while (invalidNumber(num1)) {
-    prompt(messages[langCode].invalidNum);
-    num1 = readline.question();
+// functions declared
+
+function getInput(inputType, languageCode, inputVerifyFunction) {
+  if (languageCode) {
+    sleep(200);
+    prompt(messages[languageCode][inputType]);
+    let retrievedInput = readline.question();
+    retrievedInput = inputVerifyFunction(retrievedInput, languageCode);
+    return retrievedInput;
+  } else {
+    sleep(200);
+    prompt(messages[inputType]);
+    let retrievedInput = readline.question();
+    retrievedInput = inputVerifyFunction(retrievedInput);
+    return retrievedInput;
   }
+}
 
-  // obtain second number
-  prompt(messages[langCode].secondNum);
-  let num2 = readline.question();
-
-  while (invalidNumber(num2)) {
-    prompt(messages[langCode].invalidNum);
-    num2 = readline.question();
+function isValidArithmetic(num2, operation) {
+  if (num2 === '0' && operation === '4') {
+    return false;
+  } else {
+    return true;
   }
+}
 
-  // obtain operation
-  prompt(messages[langCode].askOp);
-  let operation = readline.question();
-
-  while (!['1', '2', '3', '4'].includes(operation)) {
-    prompt(messages[langCode].invalidOp);
-    operation = readline.question();
-  }
-
-  // compute output as function of operation
+function computeOutput(num1, num2, operation) {
   let output;
   switch (operation) {
     case '1':
@@ -57,24 +83,77 @@ while (cont === '1') {
       output = Number(Number(num1) / Number(num2)).toFixed(2);
       break;
   }
+  return output;
+}
 
-  prompt(messages[langCode].showResult + output);
+function giveResult(result, languageCode) {
+  prompt(messages[languageCode].showResult + output);
+}
 
-  // revaluate condtion to keep program running/looping
+function sayBadArithmetic(languageCode) {
+  prompt(messages[langCode].divideByZero);
+}
+
+
+function getContinueProgram() {
+  sleep(200);
   prompt(messages[langCode].contCalc);
-  cont = readline.question();
+  let contProg = readline.question();
 
-  while (!['1', '2'].includes(cont)) {
+  while (!['1', '2'].includes(contProg)) {
+    sleep(200);
     prompt(messages[langCode].invalidContCalc);
-    cont = readline.question();
+    contProg = readline.question();
+  }
+
+  if (contProg === '1') {
+    return true;
+  } else {
+    return false;
   }
 }
 
-// functions declared
+// helper functions
 function prompt(message) {
   console.log(`+-*/ ${message}`);
 }
 
-function invalidNumber(number) {
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while(currentDate - date < milliseconds);
+}
+
+function isInvalidNumber(number) {
   return number.trimStart() === '' || Number.isNaN(Number(number));
+}
+
+function verifyLanguage(number) {
+  while (!['1', '2', '3', '4', '5', '6', '7', '8'].includes(number)) {
+    sleep(200);
+    prompt(messages.invalidLang);
+    number = readline.question();
+  }
+  return number;
+}
+
+function verifyNumber(number, languageCode) {
+  let toVerify = number
+  while (isInvalidNumber(toVerify)) {
+    sleep(200);
+    prompt(messages[langCode].invalidNum)
+    toVerify = readline.question();
+  }
+  return toVerify;
+}
+
+function verifyOperation(number) {
+  while (!['1', '2', '3', '4'].includes(number)) {
+    sleep(200);
+    prompt(messages[langCode].invalidOp);
+    number = readline.question();
+  }
+  return number;
 }
