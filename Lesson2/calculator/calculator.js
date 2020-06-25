@@ -1,4 +1,3 @@
-// initialization of program
 const readline = require('readline-sync');
 const messages = require('./calculator_messages.json');
 let langCode;
@@ -9,37 +8,29 @@ let output;
 
 // get user language choice
 console.clear();
-
 langCode = getInput("lang", "", verifyLanguage);
 
 // run calculator
-while(true) {
+while (true) {
 
   console.clear();
 
-  
   num1 = getInput("firstNum", langCode, verifyNumber);
 
-  
   num2 = getInput("secondNum", langCode, verifyNumber);
 
-  
   operation = getInput("askOp", langCode, verifyOperation);
 
   if (isValidArithmetic(num2, operation)) {
     output = computeOutput(num1, num2, operation);
-    
     giveResult(output, langCode);
   } else {
-    
     sayBadArithmetic(langCode);
   }
 
-  
   if (!getContinueProgram(langCode)) break;
 
 }
-
 
 // functions declared
 
@@ -87,22 +78,22 @@ function computeOutput(num1, num2, operation) {
 }
 
 function giveResult(result, languageCode) {
-  prompt(messages[languageCode].showResult + output);
+  prompt(messages[languageCode].showResult + result);
 }
 
 function sayBadArithmetic(languageCode) {
-  prompt(messages[langCode].divideByZero);
+  prompt(messages[languageCode].divideByZero);
 }
 
 
-function getContinueProgram() {
+function getContinueProgram(languageCode) {
   sleep(200);
-  prompt(messages[langCode].contCalc);
+  prompt(messages[languageCode].contCalc);
   let contProg = readline.question();
 
   while (!['1', '2'].includes(contProg)) {
     sleep(200);
-    prompt(messages[langCode].invalidContCalc);
+    prompt(messages[languageCode].invalidContCalc);
     contProg = readline.question();
   }
 
@@ -114,6 +105,7 @@ function getContinueProgram() {
 }
 
 // helper functions
+
 function prompt(message) {
   console.log(`+-*/ ${message}`);
 }
@@ -123,7 +115,7 @@ function sleep(milliseconds) {
   let currentDate = null;
   do {
     currentDate = Date.now();
-  } while(currentDate - date < milliseconds);
+  } while (currentDate - date < milliseconds);
 }
 
 function isInvalidNumber(number) {
@@ -140,19 +132,19 @@ function verifyLanguage(number) {
 }
 
 function verifyNumber(number, languageCode) {
-  let toVerify = number
+  let toVerify = number;
   while (isInvalidNumber(toVerify)) {
     sleep(200);
-    prompt(messages[langCode].invalidNum)
+    prompt(messages[languageCode].invalidNum);
     toVerify = readline.question();
   }
   return toVerify;
 }
 
-function verifyOperation(number) {
+function verifyOperation(number, languageCode) {
   while (!['1', '2', '3', '4'].includes(number)) {
     sleep(200);
-    prompt(messages[langCode].invalidOp);
+    prompt(messages[languageCode].invalidOp);
     number = readline.question();
   }
   return number;
