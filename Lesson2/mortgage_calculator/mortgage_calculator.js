@@ -5,20 +5,33 @@ const messages = require('./mortgage_calculator_messages.json');
 const PERCENT_TO_RATE = 1 / 100;
 const MONTHS_IN_YEAR = 12;
 
+console.clear();
+
+sleep(200);
 prompt(messages.opening);
 
 while (true) {
 
+  sleep(500);
   let loanAmount = getLoanAmount();
-  let monthlyRate = getLoanMIR();
-  let loanDuration = getDuration();
-  let monthlyPayment = computeMonthlyPayment(loanAmount, monthlyRate, loanDuration);
 
+  sleep(200);
+  let monthlyRate = getLoanMIR();
+
+  sleep(200);
+  let loanDuration = getDuration();
+
+  sleep(200);
+  let monthlyPayment = computeMonthlyPayment(loanAmount, monthlyRate, loanDuration);
   prompt(messages.payment + String(monthlyPayment));
 
+  sleep(200);
   if (stopCalculator()) {
     break;
   }
+
+  sleep(200);
+  console.clear();
 
 }
 
@@ -67,7 +80,8 @@ function getDuration() {
 }
 
 function computeMonthlyPayment(amount, rate, months) {
-  return amount * (rate / (1 - Math.pow((1 + rate), (-months))));
+  let payment = amount * (rate / (1 - Math.pow((1 + rate), (-months))));
+  return payment.toFixed(2);
 }
 
 function stopCalculator() {
@@ -84,6 +98,13 @@ function stopCalculator() {
   return toStop;
 }
 
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while(currentDate - date < milliseconds);
+}
 
 // HELPER FUNCTIONS USED IN THIS PROGRAM:
 
