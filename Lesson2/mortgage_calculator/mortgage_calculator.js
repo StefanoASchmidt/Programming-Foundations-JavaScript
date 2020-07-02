@@ -5,39 +5,7 @@ const messages = require('./mortgage_calculator_messages.json');
 const PERCENT_TO_RATE = 1 / 100;
 const MONTHS_IN_YEAR = 12;
 
-console.clear();
-
-sleep(200);
-prompt(messages.opening);
-
-while (true) {
-
-  sleep(500);
-  let loanAmount = getLoanAmount();
-
-  sleep(200);
-  let monthlyRate = getLoanMIR();
-
-  sleep(200);
-  let loanDuration = getDuration();
-
-  sleep(200);
-  let monthlyPayment = computeMonthlyPayment(loanAmount, monthlyRate, loanDuration);
-  prompt(messages.payment + String(monthlyPayment));
-
-  sleep(200);
-  if (stopCalculator()) {
-    break;
-  }
-
-  sleep(200);
-  console.clear();
-
-}
-
-
-// FUNCTIONS USED IN THIS PROGRAM:
-
+// FUNCTIONS:
 function prompt(string) {
   console.log(`>> ${string}`);
 }
@@ -52,7 +20,7 @@ function getLoanAmount() {
   return Number(userInput);
 }
 
-function getLoanMIR() {
+function getMonthlyRate() {
   prompt(messages.loanAPR);
   let userInput = readline.question();
   while (invalidAPR(userInput)) {
@@ -66,13 +34,13 @@ function getDuration() {
   let duration;
   let option = getOption();
   switch (option) {
-    case '1':
+    case 'y':
       duration = getDurationYears();
       break;
-    case '2':
+    case 'ym':
       duration = getDurationYearsMonths();
       break;
-    case '3':
+    case 'm':
       duration = getDurationMonths();
       break;
   }
@@ -80,7 +48,12 @@ function getDuration() {
 }
 
 function computeMonthlyPayment(amount, rate, months) {
-  let payment = amount * (rate / (1 - Math.pow((1 + rate), (-months))));
+  let payment;
+  if (rate === 0) {
+    payment = amount / months;
+  } else {
+    payment = amount * (rate / (1 - Math.pow((1 + rate), (-months))));
+  }
   return payment.toFixed(2);
 }
 
@@ -88,16 +61,17 @@ function stopCalculator() {
   let toStop;
   let symbolStop = getStop();
   switch (symbolStop) {
-    case '1':
+    case 'y':
       toStop = false;
       break;
-    case '2':
+    case 'n':
       toStop = true;
       break;
   }
   return toStop;
 }
 
+/*
 function sleep(milliseconds) {
   const date = Date.now();
   let currentDate = null;
@@ -105,9 +79,9 @@ function sleep(milliseconds) {
     currentDate = Date.now();
   } while(currentDate - date < milliseconds);
 }
+*/
 
-// HELPER FUNCTIONS USED IN THIS PROGRAM:
-
+// HELPER FUNCTIONS:
 function getDurationMonths() {
   prompt(messages.durationMonths);
   let userInput = readline.question();
@@ -123,7 +97,7 @@ function getDurationYears() {
   let userInput = readline.question();
   while (invalidLoanDuration(userInput)) {
     prompt(messages.notLoanDuration);
-    userInput = readline.question;
+    userInput = readline.question();
   }
   return Number(userInput) * MONTHS_IN_YEAR;
 }
@@ -134,33 +108,33 @@ function getDurationYearsMonths() {
   let userInput = readline.question();
   while (invalidLoanDuration(userInput)) {
     prompt(messages.notLoanDuration);
-    userInput = readline.question;
+    userInput = readline.question();
   }
   prompt(messages.numMonths);
   let secondUserInput = readline.question();
   while (invalidLoanDuration(secondUserInput)) {
     prompt(messages.notLoanDuration);
-    secondUserInput = readline.question;
+    secondUserInput = readline.question();
   }
   return (Number(userInput) * MONTHS_IN_YEAR) + Number(secondUserInput);
 }
 
 function getOption() {
   prompt(messages.whichDuration);
-  let userInput = readline.question();
-  while (!['1', '2', '3'].includes(userInput)) {
+  let userInput = readline.question().trim().toLowerCase();
+  while (!['y', 'ym', 'm'].includes(userInput)) {
     prompt(messages.notDuration);
-    userInput = readline.question();
+    userInput = readline.question().trim().toLowerCase();
   }
   return userInput;
 }
 
 function getStop() {
   prompt(messages.continue);
-  let userInput = readline.question();
-  while (invalidNumber(userInput) || !['1', '2'].includes(userInput)) {
+  let userInput = readline.question().trim().toLowerCase()[0];
+  while (!['y', 'n'].includes(userInput)) {
     prompt(messages.notContinue);
-    userInput = readline.question();
+    userInput = readline.question().trim().toLowerCase()[0];
   }
   return userInput;
 }
@@ -179,4 +153,28 @@ function invalidLoanDuration(number) {
 
 function invalidNumber(number) {
   return number.trimStart() === '' || Number.isNaN(Number(number));
+}
+
+// PROGRAM
+console.clear();
+
+prompt(messages.opening);
+
+while (true) {
+
+  let loan = getLoanAmount();
+
+  let rate = getMonthlyRate();
+
+  let duration = getDuration();
+
+  let monthlyPayment = computeMonthlyPayment(loan, rate, duration);
+  prompt(messages.payment + String(monthlyPayment));
+
+  if (stopCalculator()) {
+    break;
+  }
+
+  console.clear();
+
 }
