@@ -1,12 +1,13 @@
 const SUITS = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
 const VALUES = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King', 'Ace'];
 const CARD_VALUES = { 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9,
-                      10: 10, 'Jack': 10, 'Queen': 10, 'King': 10 };
-const SUIT_CODES = {'Hearts': 9829, 'Diamonds': 9830, 'Clubs': 9827, 'Spades': 9824};
+  10: 10, Jack: 10, Queen: 10, King: 10 };
+const SUIT_CODES = {Hearts: 9829, Diamonds: 9830, Clubs: 9827, Spades: 9824};
 const GAME_LIMIT = 21;
 const ACE_MAX_VALUE = 11;
 const ACE_MIN_VALUE = 1;
 const CARD_DISPLAY_SIZE = 9;
+const STARTING_CHIPS = 10;
 let readline = require('readline-sync');
 
 function displayBalance(chips) {
@@ -38,7 +39,7 @@ function displayCards(cards, isDealer = false) {
   let suitStr1 = '';
   let suitStr2 = '';
   let valStr = '';
-  
+
   for (let idx = 0; idx < cards.length; idx += 1) {
     if (isDealer && idx === 0) {
       suitStr1 += ' |---------| ';
@@ -46,8 +47,8 @@ function displayCards(cards, isDealer = false) {
       valStr += ' |---------| ';
       continue;
     }
-    
-    let valuePad = String(cards[idx].val).length + 
+
+    let valuePad = String(cards[idx].val).length +
     Math.floor((CARD_DISPLAY_SIZE - String(cards[idx].val).length) / 2);
 
     let suitCode = String.fromCharCode(SUIT_CODES[cards[idx].suit]);
@@ -55,10 +56,10 @@ function displayCards(cards, isDealer = false) {
     suitStr1 += ` |${suitCode}        | `;
     suitStr2 += ` |${suitCode}        | `.split('').reverse().join('');
     valStr += ` |${String(cards[idx].val).padStart(valuePad, ' ')
-                                         .padEnd(CARD_DISPLAY_SIZE, ' ')}| `;
-  
+      .padEnd(CARD_DISPLAY_SIZE, ' ')}| `;
+
   }
-  
+
   console.log(' +---------+ '.repeat(cards.length));
   console.log(suitStr1);
   console.log(' |         | '.repeat(cards.length));
@@ -82,7 +83,7 @@ function displayBoard(playerCards, dealerCards, hideDealer, chips) {
   console.log('');
 
   return undefined;
-} 
+}
 
 function dealCards(playerCards, dealerCards, deck) {
   playerCards.push(getRandomCard(deck), getRandomCard(deck));
@@ -113,7 +114,7 @@ function isBust(someScore) {
 }
 
 function playerTurn(playerCards, dealerCards, deck, chips, playerScore) {
-  while(true) {
+  while (true) {
     console.log('Hit or Stay? (h/s)');
     let answer = readline.question().toLowerCase()[0];
 
@@ -128,12 +129,12 @@ function playerTurn(playerCards, dealerCards, deck, chips, playerScore) {
     } else {
       playerScore[0] = score(playerCards);
       break;
-    } 
+    }
 
     playerScore[0] = score(playerCards);
 
     if (isBust(playerScore)) break;
-  } 
+  }
 
   return undefined;
 }
@@ -141,7 +142,7 @@ function playerTurn(playerCards, dealerCards, deck, chips, playerScore) {
 function dealerTurn(playerCards, dealerCards, deck, dealerScore) {
   dealerScore[0] = score(dealerCards);
 
-  while(dealerScore[0] <= 17) {
+  while (dealerScore[0] <= 17) {
     dealerCards.push(getRandomCard(deck));
     dealerScore[0] = score(dealerCards);
   }
@@ -156,7 +157,7 @@ function getWinner(playerScore, dealerScore) {
 
   if (playerFinalScore > dealerFinalScore) {
     return 'player';
-  } else if (dealerScore > playerScore){
+  } else if (dealerScore > playerScore) {
     return 'dealer';
   } else {
     return 'tie';
@@ -167,24 +168,24 @@ function getBet(chips) {
   console.log('How many chips do you want to bet?');
   let bet = Number.parseInt(readline.question(), 10);
 
-  while(Number.isNaN(bet)) {
+  while (Number.isNaN(bet)) {
     console.log('Please enter an integer value');
     bet = Number.parseInt(readline.question(), 10);
   }
 
-  while(bet < 1 || chips < bet) {
+  while (bet < 1 || chips < bet) {
     console.log(`Not a valid bet. Enter an integer between 1 and ${chips}.`);
-    bet = bet = Number.parseInt(readline.question(), 10);
+    bet = Number.parseInt(readline.question(), 10);
   }
 
   return bet;
 }
 
-function stopGame(chips) {
+function stopGame() {
   console.log('Do you want to play another round? (y/n)');
   let answer = readline.question().toLowerCase().trim();
 
-  while(!['y', 'n'].includes(answer)) {
+  while (!['y', 'n'].includes(answer)) {
     console.log("Enter 'y' to play another round or 'n' to stop");
     answer = readline.question().toLowerCase()[0];
   }
@@ -199,11 +200,11 @@ GAME
 */
 console.clear();
 
-let chips = 10;
+let chips = STARTING_CHIPS;
 console.log('Welcome to Twenty One');
 
 
-while(true) {
+while (true) {
   let player = [];
   let dealer = [];
   let playerScore = [0];
@@ -216,7 +217,7 @@ while(true) {
   dealCards(player, dealer, deck);
   displayBoard(player, dealer, true, chips);
 
-  while(true) {
+  while (true) {
     playerTurn(player, dealer, deck, chips, playerScore);
     if (isBust(playerScore)) {
       console.log('You went bust! Dealer wins!');
@@ -226,13 +227,13 @@ while(true) {
     dealerTurn(player, dealer, deck, dealerScore);
     if (isBust(dealerScore)) {
       chips += (bet * 2);
-      displayBoard(player, dealer, false, chips)
+      displayBoard(player, dealer, false, chips);
       console.log('Dealer went bust! You win!');
       break;
     }
 
     let winner = getWinner(playerScore, dealerScore);
-    
+
 
     if (winner === 'player') {
       chips += (bet * 2);
@@ -242,7 +243,7 @@ while(true) {
       break;
     } else if (winner === 'dealer') {
       displayBoard(player, dealer, false, chips);
-      console.log(`You scored ${playerScore[0]}. Dealer scored ${dealerScore[0]}`); 
+      console.log(`You scored ${playerScore[0]}. Dealer scored ${dealerScore[0]}`);
       console.log('Dealer wins!');
       break;
     } else {
@@ -253,7 +254,7 @@ while(true) {
       break;
     }
   }
-  
+
   if (chips <= 0) {
     console.log('You are out of chips! Goodbye!');
     break;
@@ -263,11 +264,8 @@ while(true) {
     console.log('Goodbye!');
     break;
   }
-  
+
   console.clear();
 }
-
-
-
 
 
